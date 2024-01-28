@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histograma de Salarios</title>
+    <!-- Incluye Chart.js desde un CDN (Content Delivery Network) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1>Histograma de Salarios</h1>
+<canvas id="histograma"></canvas>
+
+<script th:inline="javascript">
+        /* Obtiene los salarios del modelo y conviértelos a un array de JavaScript */
+        var salaries = /*[[${salaries}]]*/ [];
+
+        /* Obtiene las etiquetas para el eje X (opcional) */
+        var labels = salaries.map((_, index) => 'Empleado ' + (index + 1));
+
+        /* Configuración del gráfico */
+        var ctx = document.getElementById('histograma').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Salarios',
+                    data: salaries,
+                    backgroundColor: 'steelblue',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
